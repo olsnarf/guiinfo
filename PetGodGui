@@ -1,0 +1,81 @@
+_G.ToggleColor = Color3.fromRGB(0, 255, 0)
+_G.ButtonColor = Color3.fromRGB(0, 255, 0)
+_G.SliderColor = Color3.fromRGB(0, 255, 0)
+
+local library = loadstring(game:HttpGet(('https://raw.githubusercontent.com/olsnarf/guiinfo/main/Guilib.txt')))()
+
+local window = library:CreateWindow("Lameass Game")
+
+local main = window:CreateFolder("Main functions")
+main:Label("Auto Farm", Color3.fromRGB(38, 38, 38), Color3.fromRGB(0, 216, 111)) --BgColor,TextColor
+
+main:Toggle("Auto Egg.1.", function(bool)
+spawn(
+   function()
+shared.toggle1 = bool
+while wait(4) do
+if shared.toggle1 then
+local args = {
+   [1] = {
+       ["Auto"] = false,
+       ["EggType"] = "DesertBasic",
+       ["UpdateType"] = "Open",
+       ["Amount"] = 1
+   }
+}
+
+game:GetService("ReplicatedStorage").Knit.Services.EggService.RF.OpenEgg:InvokeServer(unpack(args))
+end
+end
+end)
+end)
+
+main:Button("Save My ass", function()
+game.Players.PlayerAdded:Connect(function(player)
+if player:GetRankInGroup(13787425) > 2 then
+game.Players.LocalPlayer:Kick(player:GetRoleInGroup(13787425).." joined. Admin/Mod/Someshit")
+end
+end)
+
+for i,v in pairs(game.Players:GetPlayers()) do
+if v:GetRankInGroup(13787425) > 2 then
+game.Players.LocalPlayer:Kick(v:GetRoleInGroup(13787425).." is here.Admin/Mod/Someshit")
+end
+end
+end)
+
+main:Button("Fast Autosend", function()
+local minerFunc
+for i,v in next, getgc() do
+    if typeof(v)=="function" and islclosure(v) and not is_synapse_function(v) then
+        local funcConsts = getconstants(v)
+        if table.find(funcConsts,"AutoSend") and table.find(funcConsts,"SendPet") then
+            minerFunc = v
+        end
+    end
+end
+while task.wait(2) do
+    setupvalue(minerFunc,1,10)
+end
+
+end)
+
+main:Button("Fast Kill", function()
+
+local oldNamecall
+oldNamecall = hookmetamethod(game, "__namecall", function(...)
+   local args={...}
+   local self = args[1]
+   if typeof(self)~="Instance" then
+       return oldNamecall(...)
+   end
+if not checkcaller() and getnamecallmethod()=="InvokeServer" and self.Name=="StartMining" then
+for i = 1,500 do
+   oldNamecall(...)
+end
+end
+   return oldNamecall(...)
+end)
+end)
+
+
