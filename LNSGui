@@ -1,0 +1,89 @@
+_G.ToggleColor = Color3.fromRGB(0, 255, 0)
+_G.ButtonColor = Color3.fromRGB(0, 255, 0)
+_G.SliderColor = Color3.fromRGB(0, 255, 0)
+
+local library = loadstring(game:HttpGet(('https://raw.githubusercontent.com/olsnarf/guiinfo/main/Guilib.txt')))()
+
+local window = library:CreateWindow("Long neck Sim")
+
+local main = window:CreateFolder("Main functions")
+main:Label("Auto Farm", Color3.fromRGB(38, 38, 38), Color3.fromRGB(0, 216, 111)) --BgColor,TextColor
+
+main:Toggle("Open Jungle Egg", function(bool)
+spawn(
+function()
+shared.toggle1 = bool
+while task.wait(4) do
+if shared.toggle1 then
+
+local args = {
+[1] = "Jungle Egg",
+[2] = 1,
+[3] = false
+}
+
+game:GetService("ReplicatedStorage").Remotes.Pet.ToggleHatch:InvokeServer(unpack(args))
+task.wait(1.5)
+end
+end
+end)
+end)
+
+main:Toggle("Super Tower (900 Length)", function(bool)
+spawn(
+function()
+shared.toggle2 = bool
+while task.wait(1) do
+if shared.toggle2 then
+
+local win = game.Players.LocalPlayer.leaderstats.Length.value
+
+local playernew = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame == CFrame.new(37.6242523, 1104.36792, -429.184448)
+task.wait(5)
+if game.Players.LocalPlayer.leaderstats.Length.value >= 910 then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(37.6242523, 1104.36792, -429.184448)
+task.wait(5)
+for i,v in pairs(game.Workspace.skyscraperPrize:GetDescendants()) do
+if v.Name == "_WINBRICK" then
+fireproximityprompt(v.ProximityPrompt)
+task.wait(5)
+
+end
+end
+end
+end
+end
+end)
+end)
+
+main:Toggle("Free 50 Length(300Sec CD)", function(bool)
+spawn(
+function()
+shared.toggle3 = bool
+while task.wait(4) do
+if shared.toggle3 then
+for i,v in pairs(game.Workspace.obbyPrize:GetDescendants()) do -- get workspace and his dependencies
+if v.Name == "_OBBYWINBRICK" then -- replace "SubMachine Gun" with the object you want to fire the prompt
+fireproximityprompt(v.ProximityPrompt) -- fires the prompt inside of the object ( make sure your object has a proximityprompt )
+task.wait(310)
+
+end
+end
+end
+end
+end)
+end)
+
+main:Button("Kick if owner", function()
+game.Players.PlayerAdded:Connect(function(player)
+if player:GetRankInGroup(16208015) > 4 then
+game.Players.LocalPlayer:Kick(player:GetRoleInGroup(16208015).." joined. Admin/Mod/Someshit")
+end
+end)
+
+for i,v in pairs(game.Players:GetPlayers()) do
+if v:GetRankInGroup(16208015) > 4 then
+game.Players.LocalPlayer:Kick(v:GetRoleInGroup(16208015).." is here.Admin/Mod/Someshit")
+end
+end
+end)
